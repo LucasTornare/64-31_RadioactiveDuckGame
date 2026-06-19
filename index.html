@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <title>Radioactive Duck</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="ressources/css/style.css">
+    </head>
+<body>
+
+<header>
+    <h1 class="header1">HES-SO Vs - 64-31 - Web Development</h1>
+    <nav>
+        <!-- Hamburger -->
+        <ul>
+            <li>
+                <a href="https://radioactive-duck-fdacdkdmbsfndged.switzerlandnorth-01.azurewebsites.net/description">Back</a>
+            </li>
+            <li class="active">
+                <a href="index.html">Radioactive Duck</a>
+            </li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+    <!-- Debut zone pour votre contenu -->
+    <section id="articles">
+        <article>
+            <header>
+                <h2>Radioactive Duck - Mini-Game</h2>
+                <p id="authors">Par Ambre Morard, Lucas Tornare et Sonny Contat</p>
+            </header>
+            <p>Bienvenue dans le mini-jeu "Radioactive Duck" ! Incarnez un canard radioactif et affrontez des ennemis redoutables pour survivre le plus longtemps possible. Utilisez les touches flechees pour vous deplacer et la barre d'espace pour tirer. Evitez les attaques ennemies et eliminez-les pour gagner des points. Bonne chance !</p>
+            <div id="gameContainer">
+                <canvas id="gameCanvas" width="800" height="600"></canvas>
+            </div>
+        </article>
+    </section>
+    <!-- Fin zone pour votre contenu -->
+</main>
+
+<script>
+    const canvas = document.getElementById('gameCanvas');
+</script>
+<script src="js/player.js"></script>
+<script src="js/enemy.js"></script>
+<script src="js/input-handler.js"></script>
+<script src="js/projectile.js"></script>
+<script src="js/game-render.js"></script>
+<script src="js/game-hud.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/game.js"></script>
+</body>
+</html>

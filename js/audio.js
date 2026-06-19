@@ -1,0 +1,10 @@
+const birdDeath = new Audio('ressources/audio/birdDeath.mp3');
+const gunFire = new Audio('ressources/audio/gunFire.mp3');
+gunFire.volume = 0.2; // lower volume of gun fire sound
+const ratDeath = new Audio('ressources/audio/ratDeath.mp3');
+const foxDeath = new Audio('ressources/audio/foxDeath.mp3');
+const playerDeath = new Audio('ressources/audio/playerDeath.mp3');
+const musicGameMenu = new Audio('ressources/audio/musicGameMenu.mp3');
+const musicGameplay = new Audio('ressources/audio/musicGameplay.mp3');
+musicGameMenu.loop = true;
+musicGameplay.loop = true;
