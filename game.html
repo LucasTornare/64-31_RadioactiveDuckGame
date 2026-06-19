@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <title>Radioactive Duck</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="ressources/css/style.css">
+    </head>
+<body>
+ 
+<header>
+    <nav>
+        <ul>
+            <li class="hamburger"><img src="ressources/images/devil-duck_icon_cropped.jpg" alt="Devil Duck"></li>
+            <li><a href="index.html">Customize Avatar</a></li>
+            <li class="active"><a href="game.html">Game</a></li>
+            <li><a href="halloffame.html">Hall of Fame</a></li>
+        </ul>
+    </nav>
+</header>
+ 
+<main>
+    <!-- Debut zone pour votre contenu -->
+    <section id="articles">
+        <article>
+            <div id="gameContainer">
+                <canvas id="gameCanvas" width="800" height="600"></canvas>
+            </div>
+        </article>
+    </section>
+    <!-- Fin zone pour votre contenu -->
+</main>
+ 
+<script>
+    const canvas = document.getElementById('gameCanvas');
+</script>
+<script src="js/player.js"></script>
+<script src="js/enemy.js"></script>
+<script src="js/input-handler.js"></script>
+<script src="js/projectile.js"></script>
+<script src="js/game-render.js"></script>
+<script src="js/game-hud.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/game.js"></script>
+</body>
+</html>
