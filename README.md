@@ -58,5 +58,5 @@ Survive as long as possible against waves of enemies (crow, fox, rat). Shoot the
  
 This game is presented through a separate **headless React + WordPress** site (project description, logbook, results, and links). Demo and source links live on that site's *Links* page.
  
-- Game demo: 
+- Game demo: https://lucastornare.github.io/64-31_RadioactiveDuckGame/
 - Presentation site: https://radioactive-duck-fdacdkdmbsfndged.switzerlandnorth-01.azurewebsites.net/description
