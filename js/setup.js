@@ -3,6 +3,7 @@
 // DOM references
 const pseudoInput = document.getElementById('pseudo');
 const pseudoError = document.getElementById('pseudo-error');
+const duckError   = document.getElementById('duck-error');
 const stage       = document.getElementById('avatar-stage');
 const playBtn     = document.getElementById('play-btn');
 
@@ -51,14 +52,13 @@ playBtn.addEventListener('click', () => {
         return;
     }
     if (!selectedDuck) {
-        pseudoError.textContent = 'Drag a duck into the slot first.';
+        duckError.textContent = 'Drag a duck into the slot first.';
         return;
     }
 
     const player = {
         pseudo: pseudoInput.value.trim(),
         duck: selectedDuck,
-        projectile: selectedProjectile
     };
     localStorage.setItem('duckPlayer', JSON.stringify(player));
     window.location.href = 'game.html';
