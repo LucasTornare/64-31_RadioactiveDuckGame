@@ -8,7 +8,7 @@ const stage       = document.getElementById('avatar-stage');
 const playBtn     = document.getElementById('play-btn');
 
 // Current choices
-let selectedDuck = null;        // 'yellow' | 'pink' | 'white'
+let selectedDuck = null;        // 'yellow' | 'pink' | 'green'
 
 // Check the nickname: it must be 2 to 15 characters long
 function validatePseudo() {

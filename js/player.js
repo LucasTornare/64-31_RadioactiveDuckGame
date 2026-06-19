@@ -1,5 +1,10 @@
 const playerImage = new Image();
-playerImage.src = 'ressources/images/player/devil_duck_clean_spritesheet.png';
+
+// read the player's choice saved on the customization page
+const savedPlayer = JSON.parse(localStorage.getItem('duckPlayer')) || {};
+const duckColor = savedPlayer.duck || 'yellow'; // fallback if nothing was chosen
+
+playerImage.src = 'ressources/images/player/duck_' + duckColor + '_spritesheet.png';
 
 //constante for gravity
 const gravity = 0.5;
