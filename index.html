@@ -9,56 +9,78 @@
 <body>
 
 <header>
-    <h1 class="header1">HES-SO Vs - 64-31 - Web Development</h1>
     <nav>
         <!-- Hamburger -->
         <ul>
+            <li class="hamburger"><img src="ressources/images/devil-duck_icon_cropped.jpg" alt="Devil Duck"></li>
             <li>
                 <a href="https://radioactive-duck-fdacdkdmbsfndged.switzerlandnorth-01.azurewebsites.net/description">Back</a>
             </li>
             <li class="active">
-                <a href="index.html">Radioactive Duck</a>
+                <a href="index.html">Customize Avatar</a>
             </li>
+            <li><a href="game.html">Game</a></li>
+            <li><a href="halloffame.html">Hall of Fame</a></li>
         </ul>
     </nav>
 </header>
 
 <main>
-    <!-- Debut zone pour votre contenu -->
     <section id="articles">
         <article>
             <header>
                 <h2>Radioactive Duck - Mini-Game</h2>
                 <p id="authors">Par Ambre Morard, Lucas Tornare et Sonny Contat</p>
             </header>
-            <p>Bienvenue dans le mini-jeu « Radioactive Duck » ! Incarnez un canard radioactif et affrontez des vagues d'ennemis pour survivre le plus longtemps possible. Éliminez-les pour gagner des points et battre votre meilleur score. Bonne chance !</p>
-            <h3>Commandes</h3>
-            <ul id="controls">
-                <li><strong>A</strong> / <strong>D</strong> — se déplacer à gauche / droite</li>
-                <li><strong>Espace</strong> — sauter</li>
-                <li><strong>Souris</strong> — viser</li>
-                <li><strong>Clic</strong> — tirer</li>
-                <li><strong>Entrée</strong> — démarrer la partie (depuis le menu)</li>
-                <li><strong>R</strong> — recommencer &nbsp;·&nbsp; <strong>M</strong> — retour au menu &nbsp;·&nbsp; <strong>F</strong> — plein écran</li>
-            </ul>
-            <div id="gameContainer">
-                <canvas id="gameCanvas" width="800" height="600"></canvas>
+            <header>
+                <h2>Custom your duck !</h2>
+                <p>Choose your nickname, drag your duck, pick your projectile, then start the game.</p>
+            </header>
+ 
+            <!-- 1) FORMULAIRE : pseudo + validation -->
+            <div class="setup-section">
+                <h3>1. Your nickname</h3>
+                <input type="text" id="pseudo" maxlength="15" placeholder="2 to 15 characters (letters, numbers, _ or -)" autocomplete="off">
+                <div id="pseudo-error"></div>
             </div>
+ 
+            <!-- 2) CANARD : DRAG'N DROP in the placement area -->
+            <div class="setup-section">
+                <h3>2. Your duck</h3>
+                <div class="choice-row">
+                    <!-- Source to pick or drag and drop -->
+                    <div id="duck-choices" class="choice-row">
+                        <div class="duck-option" draggable="true" data-value="yellow">
+                            <img src="ressources/images/player/duck_yellow.png" alt="Yellow duck">
+                            Yellow
+                        </div>
+                        <div class="duck-option" draggable="true" data-value="pink">
+                            <img src="ressources/images/player/duck_pink.png" alt="Pink duck">
+                            Pink
+                        </div>
+                        <div class="duck-option" draggable="true" data-value="green">
+                            <img src="ressources/images/player/duck_green.png" alt="Green duck">
+                            Green
+                        </div>
+                    </div>
+                    <span class="arrow">&rarr;</span>
+                    <!-- Duck chosen appears here -->
+                    <div id="avatar-stage">Drop your duck here</div>
+                </div>
+                <p class="hint">Drag and drop a duck into the designated area (or click it).</p>
+                <p id="duck-error" class="error"></p>
+            </div>
+ 
+            <!-- 4) Play -->
+            <button type="button" id="play-btn">Play !</button>
         </article>
     </section>
-    <!-- Fin zone pour votre contenu -->
 </main>
 
-<script>
-    const canvas = document.getElementById('gameCanvas');
-</script>
-<script src="js/player.js"></script>
-<script src="js/enemy.js"></script>
-<script src="js/input-handler.js"></script>
-<script src="js/projectile.js"></script>
-<script src="js/game-render.js"></script>
-<script src="js/game-hud.js"></script>
-<script src="js/audio.js"></script>
-<script src="js/game.js"></script>
+    <footer>
+        <img id="logo" src="ressources/images/logo.svg">
+    </footer>
+
+<script src="js/setup.js"></script>
 </body>
 </html>

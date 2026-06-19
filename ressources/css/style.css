@@ -71,13 +71,13 @@ nav ul li.active {
     margin: 0;
     padding: 0;
     flex-basis: 100%;
-    height: 180px;
+    height: auto;
     overflow: hidden;
 }
 
 .hamburger img {
     width: 100%;
-    height: 100%;
+    height: auto;
     display: block;
     object-fit: cover;
 }
@@ -290,4 +290,47 @@ footer {
 
 #duckSpriteSheet {
     width:50%;
+}
+
+/* Styles for the page index.html and customize the avatar */
+.choice-row { 
+    display: flex; gap: 14px; flex-wrap: wrap; align-items: center; 
+}
+.duck-option, .option-card {
+    border: 3px solid transparent; border-radius: 8px; padding: 8px;
+    text-align: center; background: rgba(0, 0, 0, 0.25);
+}
+.duck-option { 
+    cursor: grab; 
+}
+.option-card { 
+    cursor: pointer; 
+}
+.duck-option img, .option-card img {
+    display: block; width: 90px; height: 90px;
+    object-fit: contain; image-rendering: pixelated; pointer-events: none;
+}
+.option-card.selected { 
+    border-color: #39ff14; 
+}
+.arrow { 
+    font-size: 1.6em; color: #888; 
+}
+/* Zone de depot du canard choisi */
+#avatar-stage {
+    width: 130px; height: 130px; border: 3px dashed #888; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(0, 0, 0, 0.25); color: #888; font-size: 0.85em; text-align: center;
+}
+#avatar-stage.dragover { 
+    border-color: #39ff14; background: #223322; 
+}
+#avatar-stage img { 
+    max-width: 90%; max-height: 90%; image-rendering: pixelated; 
+}
+#pseudo-error { 
+    color: #ff6b6b; min-height: 1.2em; 
+}
+#duck-error { 
+    color: #ff6b6b; min-height: 1.2em; 
 }
