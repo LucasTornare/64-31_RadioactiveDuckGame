@@ -334,3 +334,9 @@ footer {
 #duck-error { 
     color: #ff6b6b; min-height: 1.2em; 
 }
+
+.disabled {
+    color: gray;
+    padding: 14px 20px;
+    cursor: not-allowed;
+}
