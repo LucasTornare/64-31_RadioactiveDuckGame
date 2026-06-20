@@ -1,9 +1,23 @@
+// Get the player configuration saved from the customization page
+const savedPlayer = JSON.parse(localStorage.getItem('duckPlayer') || 'null');
+
+// Redirect to the customization page if the player is not configured correctly
+if (
+    !savedPlayer ||
+    !savedPlayer.pseudo ||
+    savedPlayer.pseudo.trim().length < 2 ||
+    savedPlayer.pseudo.trim().length > 15 ||
+    !['yellow', 'pink', 'green'].includes(savedPlayer.duck)
+) {
+    window.location.href = 'index.html';
+    throw new Error('Player not configured');
+}
+
+// Get the selected duck color
+const duckColor = savedPlayer.duck;
+
+// Load the correct player spritesheet based on the selected duck
 const playerImage = new Image();
-
-// read the player's choice saved on the customization page
-const savedPlayer = JSON.parse(localStorage.getItem('duckPlayer')) || {};
-const duckColor = savedPlayer.duck || 'yellow'; // fallback if nothing was chosen
-
 playerImage.src = 'ressources/images/player/duck_' + duckColor + '_spritesheet.png';
 
 //constante for gravity
