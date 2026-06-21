@@ -9,7 +9,7 @@ function render() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     // Draw background layers (must be first, behind everything)
-    drawBackground();
+    background.draw();
 
     // Draw the player
     if (player.facingLeft) {
@@ -119,7 +119,7 @@ function update() {
     updateProjectiles();
 
     // Update background parallax scrolling
-    updateBackground();
+    background.update();
 
     player.distance++; // increment distance of 1 per frame
 
@@ -264,7 +264,7 @@ function update() {
 function gameLoop() {
     if(gameStarted === false && gameOver === false) {
         // Draw background scrolling behind the menu
-        updateBackground();
+        background.update();
 
         renderMenu();
         if(musicGameMenu.paused && !gameStarted) {
