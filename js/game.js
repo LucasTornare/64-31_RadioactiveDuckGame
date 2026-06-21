@@ -216,7 +216,7 @@ function update() {
     
     //Bring back player on the ground
     if(player.y + player.height >= GROUND_Y) {
-        player.y = GROUND_Y - player.height;
+        player.y = GROUND_Y - player.height+6;
         player.velocityY = 0;
         player.onGround = true;
     }
@@ -232,7 +232,7 @@ function update() {
         player.y = 0;
     }
     if(player.y + player.height > GROUND_Y) {
-        player.y = GROUND_Y - player.height;
+        player.y = GROUND_Y - player.height+6;
     }
 
     // Clear just-pressed flags at end of each frame
