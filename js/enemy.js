@@ -34,9 +34,10 @@ const fox = {
     attack: 15,
     defense: 10,
     x: 600,
-    y: canvas.height * 0.93 - 150 - 64 + 25 - 17, // position on the tower
+    y: GROUND_Y - 207 - 8 - 64, // position on the tower
     width: 80,
     height: 64,
+    speedX: -1,
     respawnTimer: 180, // respawn after 3 seconds
     shootTimer: 0,
     shootInterval: 180, // shoot every 3 seconds at 60fps
@@ -72,10 +73,11 @@ function spawnEnemies(waveNumber) {
     crow.speedX = -speedBoost; // negative so it moves left
 
     fox.health = 150;
-    fox.x = 600;
-    fox.y = GROUND_Y - 150 - 64 + 25 - 17; // GROUND_Y - towerH - fox.height
+    fox.x = 500;
+    fox.y = GROUND_Y - 207 - 8 - 64 + 60; // GROUND_Y - towerH - fox.height
     fox.visible = true;
     fox.shootTimer = 0;
+    background.towerX = fox.x - 60;
 
     rat.health = 50;
     rat.x = canvas.width + 20; // spawn off screen to the right
@@ -103,11 +105,12 @@ function respawnCrow() {
 
 function respawnFox() {
     fox.health = 150;
-    fox.x = 600;
-    fox.y = GROUND_Y - 150 - 64 + 25 - 17; // GROUND_Y - towerH - fox.height
+    fox.x = canvas.width + 20;
+    fox.y = GROUND_Y - 207 - 8 - 64 + 60; // GROUND_Y - towerH - fox.height
     fox.visible = true;
     fox.shootTimer = 0;
     fox.shootInterval = Math.max(60, fox.shootInterval - 20); // shoot faster each wave, but not less than 1 second (60 frames)
+    background.towerX = fox.x - 60; // la tour réapparaît à droite, alignée avec le renard
 }
 
 function respawnRat() {

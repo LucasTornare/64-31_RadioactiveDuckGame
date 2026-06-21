@@ -69,6 +69,11 @@ class Background {
 
         // Zone actuellement active (ville ou forêt)
         this.currentZone = 'city';
+        
+        // Position et vitesse de la tour, indépendantes du tableau de layers
+        // car elle ne doit pas se répéter à chaque imgW comme un vrai tile
+        this.towerX = 580;
+        this.towerSpeed = 1; // même vitesse que bgBarbedWires pour rester cohérente visuellement
     }
 
     // Draw a single parallax layer looped
@@ -85,12 +90,12 @@ class Background {
     }
 
     // Draw all layers of the current zone
-    draw() {
+    draw(showTower = false) {
         const layers = this.currentZone === 'city' ? this.cityLayers : this.forestLayers;
         for (let i = 0; i < layers.length; i++) {
             this.drawLayer(layers[i]);
             // Draw tower after middle layer (index 4), before barbed wires
-            if (this.currentZone === 'city' && i === 5) {
+            if (this.currentZone === 'city' && i === 5 && showTower) {
                 this.drawFoxTower();
             }
         }
@@ -98,11 +103,10 @@ class Background {
 
     //Draw the tower for the fox
     drawFoxTower() {
-        const towerW = 120;
-        const towerH = 150;
-        const towerX = 580; // same x as the fox so it looks like the fox is on the tower
-        const towerY = GROUND_Y - towerH - 17;
-        ctx.drawImage(foxTower, towerX, towerY, towerW, towerH);
+        const towerW = 200;
+        const towerH = 207;
+        const towerY = GROUND_Y - towerH - 8;
+        ctx.drawImage(foxTower, this.towerX, towerY, towerW, towerH);
     }
 
     // Scroll and loop
@@ -118,6 +122,8 @@ class Background {
                 layer.x = 0; // remet l'image à sa place initial pour la boucle
             }
         }
+        // Scroll de la tour, synchronisée avec le décor
+        this.towerX -= this.towerSpeed;
     }
 
     // Switch to a different zone, call background.setZone('forest') to trigger transition

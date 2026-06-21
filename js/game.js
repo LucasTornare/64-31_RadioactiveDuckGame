@@ -9,7 +9,7 @@ function render() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     // Draw background layers (must be first, behind everything)
-    background.draw();
+    background.draw(true);
 
     // Draw the player
     if (player.facingLeft) {
@@ -137,10 +137,13 @@ function update() {
         }
     }
 
-    //Fox shoot from tower and stay static
+    //Fox shoot from tower and move with it
     if (fox.visible) {
         fox.shootTimer++;
-        
+        fox.x += fox.speedX; 
+        if (fox.x + fox.width < 0) {
+        fox.visible = false;
+        }
     }
 
     //Move the rat
@@ -276,6 +279,7 @@ function gameLoop() {
             musicGameMenu.currentTime = 0;
             musicGameplay.currentTime = 0;
             musicGameplay.play().catch(() => {});
+            background.towerX = fox.x - 60; // resynchronise juste avant que le gameplay (et la tour) deviennent visibles
             gameStarted = true;
         }
     }
