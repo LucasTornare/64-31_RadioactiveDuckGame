@@ -12,20 +12,27 @@ function render() {
     background.draw(true);
 
     // Draw the player
+    // Taille d'une frame dans le nouveau spritesheet (grille 2 colonnes x 4 lignes)
+    const frameW = 138;
+    const frameH = 138;
+    // frameX (0 à 3) est traité comme un index linéaire sur cette grille
+    const col = player.frameX % 2;
+    const row = Math.floor(player.frameX / 2);
+
     if (player.facingLeft) {
         ctx.save();
         ctx.scale(-1, 1); // Flip horizontally
         ctx.drawImage(
             playerImage,
-            player.frameX * 384, player.frameY * 256, 384, 256,        // Extract from the spritesheet (x, y, width, height)
-            -player.x - player.width, player.y, player.width, player.height  // Draw flipped on canvas (x, y, width, height)
+            col * frameW, row * frameH, frameW, frameH,
+            -player.x - player.width, player.y, player.width, player.height
         );
         ctx.restore();
     } else {
         ctx.drawImage(
         playerImage,
-        player.frameX * 384, player.frameY * 256, 384, 256,        // Extract from the spritesheet (x, y, width, height)
-        player.x, player.y, player.width, player.height  // Draw on canvas (x, y, width, height)
+        col * frameW, row * frameH, frameW, frameH,
+        player.x, player.y, player.width, player.height
         );
     }
 
@@ -185,8 +192,8 @@ function update() {
     }
     if (keysDown['a']) {
         player.frameTimer++;
-        if (player.frameTimer > 10) { // Adjust the frame change speed here
-            player.frameY = (player.frameY + 1) % 4;
+        if (player.frameTimer > 1) { // Adjust the frame change speed here
+            player.frameX = (player.frameX + 1) % 6;
             player.frameTimer = 0;
         }
         player.x -= 5;
@@ -194,8 +201,8 @@ function update() {
     }
     if (keysDown['d']) {
         player.frameTimer++;
-        if (player.frameTimer > 10) { // Adjust the frame change speed here
-            player.frameY = (player.frameY + 1) % 4;
+        if (player.frameTimer > 1) { // Adjust the frame change speed here
+            player.frameX = (player.frameX + 1) % 6;
             player.frameTimer = 0;
         }
         player.x += 5;

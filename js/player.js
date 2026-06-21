@@ -28,10 +28,10 @@ const GROUND_Y = canvas.height * 0.93;
 
 const player = {
     x: 50,
-    y: GROUND_Y - 64, // start on the ground
+    y: GROUND_Y - 100, // start on the ground
     attack: 25,
-    width: 80,
-    height: 64,
+    width: 100,
+    height: 100,
     health: 100,
     frameX: 0,
     frameY: 0,
@@ -46,7 +46,7 @@ const player = {
 
 function restartPlayer() {
     player.x = 50;
-    player.y = GROUND_Y - 64;
+    player.y = GROUND_Y - 100;
     player.health = 100;
     player.frameX = 0;
     player.frameY = 0;
