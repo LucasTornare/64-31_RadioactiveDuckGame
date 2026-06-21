@@ -124,9 +124,12 @@ function drawLayer(layer) {
     // Arrondit la position X du layer au pixel entier le plus proche (évite le flou)
     const x = Math.floor(layer.x);
     const imgW = layer.imgW;
-    // Draw the image twice side by side
-    ctx.drawImage(layer.img, x, layer.y, imgW, layer.imgH);
-    ctx.drawImage(layer.img, x + imgW, layer.y, imgW, layer.imgH);
+    // Nombre de copies nécessaire pour couvrir tout le canvas même si imgW < canvas.width
+    const copies = Math.ceil(canvas.width / imgW) + 1;
+    for (let i = 0; i < copies; i++) {
+        // +1 sur la largeur : léger chevauchement entre copies pour masquer le seam
+        ctx.drawImage(layer.img, x + i * imgW, layer.y, imgW + 1, layer.imgH);
+    }
 }
 
 // Draw all layers of the current zone
