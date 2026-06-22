@@ -9,23 +9,30 @@ function render() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     // Draw background layers (must be first, behind everything)
-    drawBackground();
+    background.draw(true);
 
     // Draw the player
+    // Taille d'une frame dans le nouveau spritesheet (grille 2 colonnes x 4 lignes)
+    const frameW = 138;
+    const frameH = 138;
+    // frameX (0 à 3) est traité comme un index linéaire sur cette grille
+    const col = player.frameX % 2;
+    const row = Math.floor(player.frameX / 2);
+
     if (player.facingLeft) {
         ctx.save();
         ctx.scale(-1, 1); // Flip horizontally
         ctx.drawImage(
             playerImage,
-            player.frameX * 384, player.frameY * 256, 384, 256,        // Extract from the spritesheet (x, y, width, height)
-            -player.x - player.width, player.y, player.width, player.height  // Draw flipped on canvas (x, y, width, height)
+            col * frameW, row * frameH, frameW, frameH,
+            -player.x - player.width, player.y, player.width, player.height
         );
         ctx.restore();
     } else {
         ctx.drawImage(
         playerImage,
-        player.frameX * 384, player.frameY * 256, 384, 256,        // Extract from the spritesheet (x, y, width, height)
-        player.x, player.y, player.width, player.height  // Draw on canvas (x, y, width, height)
+        col * frameW, row * frameH, frameW, frameH,
+        player.x, player.y, player.width, player.height
         );
     }
 
@@ -119,7 +126,7 @@ function update() {
     updateProjectiles();
 
     // Update background parallax scrolling
-    updateBackground();
+    background.update();
 
     player.distance++; // increment distance of 1 per frame
 
@@ -137,10 +144,13 @@ function update() {
         }
     }
 
-    //Fox shoot from tower and stay static
+    //Fox shoot from tower and move with it
     if (fox.visible) {
         fox.shootTimer++;
-        
+        fox.x += fox.speedX; 
+        if (fox.x + fox.width < 0) {
+        fox.visible = false;
+        }
     }
 
     //Move the rat
@@ -182,8 +192,8 @@ function update() {
     }
     if (keysDown['a']) {
         player.frameTimer++;
-        if (player.frameTimer > 10) { // Adjust the frame change speed here
-            player.frameY = (player.frameY + 1) % 4;
+        if (player.frameTimer > 1) { // Adjust the frame change speed here
+            player.frameX = (player.frameX + 1) % 6;
             player.frameTimer = 0;
         }
         player.x -= 5;
@@ -191,8 +201,8 @@ function update() {
     }
     if (keysDown['d']) {
         player.frameTimer++;
-        if (player.frameTimer > 10) { // Adjust the frame change speed here
-            player.frameY = (player.frameY + 1) % 4;
+        if (player.frameTimer > 1) { // Adjust the frame change speed here
+            player.frameX = (player.frameX + 1) % 6;
             player.frameTimer = 0;
         }
         player.x += 5;
@@ -206,7 +216,7 @@ function update() {
     
     //Bring back player on the ground
     if(player.y + player.height >= GROUND_Y) {
-        player.y = GROUND_Y - player.height;
+        player.y = GROUND_Y - player.height+6;
         player.velocityY = 0;
         player.onGround = true;
     }
@@ -222,7 +232,7 @@ function update() {
         player.y = 0;
     }
     if(player.y + player.height > GROUND_Y) {
-        player.y = GROUND_Y - player.height;
+        player.y = GROUND_Y - player.height+6;
     }
 
     // Clear just-pressed flags at end of each frame
@@ -264,7 +274,7 @@ function update() {
 function gameLoop() {
     if(gameStarted === false && gameOver === false) {
         // Draw background scrolling behind the menu
-        updateBackground();
+        background.update();
 
         renderMenu();
         if(musicGameMenu.paused && !gameStarted) {
@@ -276,6 +286,7 @@ function gameLoop() {
             musicGameMenu.currentTime = 0;
             musicGameplay.currentTime = 0;
             musicGameplay.play().catch(() => {});
+            background.towerX = fox.x - 60; // resynchronise juste avant que le gameplay (et la tour) deviennent visibles
             gameStarted = true;
         }
     }

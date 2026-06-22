@@ -78,6 +78,7 @@ canvas.addEventListener('click', (event) => {
             musicGameMenu.currentTime = 0;
             musicGameplay.currentTime = 0;
             musicGameplay.play().catch(() => {});
+            background.towerX = fox.x - 60; 
             gameStarted = true;
         }
         // Clic sur le bouton Commandes (60x60, en bas à droite)
