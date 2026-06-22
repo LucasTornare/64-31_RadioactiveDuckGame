@@ -45,9 +45,6 @@ restartButton.src = 'ressources/images/gameMenu/button1.png';
 const mainMenuButton = new Image();
 mainMenuButton.src = 'ressources/images/gameMenu/button1.png';
 
-const trophyHallButton = new Image();
-trophyHallButton.src = 'ressources/images/gameMenu/button1.png';
-
 //Draw the header of the game, the button to start the game and the header "Press Enter to Start"
 function renderMenu() {
     ctx.clearRect(0, 0, canvas.width, canvas.height); //Clear the canvas before drawing the menu
@@ -147,7 +144,7 @@ function renderGameOver() {
         100,
         600, 150
     );
-    //draw the buttons to restart the game, go to the main menu or go to the trophy hall
+    //draw the buttons to restart the game or go to the main menu
         ctx.drawImage(
         restartButton,
         (canvas.width - (200 + 20 + 200)) / 2,
@@ -160,13 +157,6 @@ function renderGameOver() {
         420,
         200, 60
     );
-    ctx.drawImage(
-        trophyHallButton,
-        canvas.width / 2 - 200 / 2,
-        500,
-        200, 60
-    );
-
 
     ctx.fillStyle = '#cedd59 ' ;
     ctx.textAlign = 'center';
@@ -184,12 +174,16 @@ function renderGameOver() {
     ctx.fillText('DISTANCE', canvas.width / 2 - 170, 305);
     ctx.fillText(Math.floor(player.distance/60) + 'm', canvas.width / 2 + 130, 305);
 
-    //Draw the restart button, main menu button and trophy hall button text
+    // Draw the best score (persisted in localStorage) on the third slot of the score board
+    const bestScore = parseInt(localStorage.getItem('bestScore')) || 0;
+    ctx.fillText('BEST SCORE', canvas.width / 2 - 170, 367);
+    ctx.fillText(bestScore, canvas.width / 2 + 130, 367);
+
+    //Draw the restart button and main menu button text
     ctx.fillStyle = '#e0ff89 ' ;
     ctx.font = '30px ' + gameFont;
     ctx.fillText('RESTART', (canvas.width - 420) / 2 + 100, 420 + 28);
     ctx.fillText('MAIN MENU', (canvas.width - 420) / 2 + 220 + 100, 420 + 28);
-    ctx.fillText('TROPHY HALL', canvas.width / 2, 500 + 28);
 
     ctx.shadowColor = 'transparent'; // reset pour ne pas affecter les autres draw calls
 }
