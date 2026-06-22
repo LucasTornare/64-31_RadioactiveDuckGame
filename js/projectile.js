@@ -1,6 +1,33 @@
 const projectiles = [];
 const projectileSpeed = 5;
 
+// Fireball spritesheet: a "ball -> trailing tail" animation, several colors stacked in a grid.
+// Frame coords were measured directly on the sheet (ball at the left of each frame, tail growing to the right).
+const projectileSpriteSheet = new Image();
+projectileSpriteSheet.src = 'ressources/images/player/projectilesSpriteSheet.png';
+
+const fireballFrameX = [34, 114, 195, 297];
+const fireballFrameY = [28, 30, 32, 34];
+const fireballFrameW = [33, 58, 83, 62];
+const fireballFrameH = [29, 24, 22, 18];
+const fireballHeadOffsetX = 16; // distance from a frame's left edge to the ball's center
+
+function buildFireballFrames(xOffset, yOffset) {
+    return fireballFrameX.map((x, i) => ({
+        x: x + xOffset,
+        y: fireballFrameY[i] + yOffset,
+        w: fireballFrameW[i],
+        h: fireballFrameH[i]
+    }));
+}
+
+const playerFireballFrames = buildFireballFrames(0, 0);     // standard green
+const crowFireballFrames = buildFireballFrames(378, 0);     // muted blue
+const foxFireballFrames = buildFireballFrames(0, 960);       // bright orange
+
+const fireballAnimDuration = 12; // frames spent growing the tail before it holds on the last frame
+const fireballDisplayScale = 0.85;
+
 function createProjectile() {
 
     const dx = mouseX - player.x;
@@ -16,21 +43,40 @@ function createProjectile() {
         height: 10,
         speedX,
         speedY,
+        angle: Math.atan2(dy, dx),
+        age: 0,
         owner: "player"
     };
 }
-function drawProjectiles() {    for (const projectile of projectiles) {
-        if (projectile.owner === "player") {
-            ctx.fillStyle = 'red';
-        } else if (projectile.owner === "crow") {
-            ctx.fillStyle = 'green';
-        } else if (projectile.owner === "fox") {
-            ctx.fillStyle = 'orange';
-        }
-        
-        ctx.fillRect(projectile.x, projectile.y, projectile.width, projectile.height);
 
-    }   
+function drawFireball(frames, projectile) {
+    const stepDuration = fireballAnimDuration / frames.length;
+    const frameIndex = Math.min(frames.length - 1, Math.floor(projectile.age / stepDuration));
+    const frame = frames[frameIndex];
+
+    ctx.save();
+    ctx.translate(projectile.x + projectile.width / 2, projectile.y + projectile.height / 2);
+    ctx.rotate(projectile.angle);
+    ctx.scale(-1, 1); // the ball sits at the left of the source frame, flip so it leads in the travel direction
+    ctx.drawImage(
+        projectileSpriteSheet,
+        frame.x, frame.y, frame.w, frame.h,
+        -fireballHeadOffsetX * fireballDisplayScale, -(frame.h * fireballDisplayScale) / 2,
+        frame.w * fireballDisplayScale, frame.h * fireballDisplayScale
+    );
+    ctx.restore();
+}
+
+function drawProjectiles() {
+    for (const projectile of projectiles) {
+        if (projectile.owner === "player") {
+            drawFireball(playerFireballFrames, projectile);
+        } else if (projectile.owner === "crow") {
+            drawFireball(crowFireballFrames, projectile);
+        } else if (projectile.owner === "fox") {
+            drawFireball(foxFireballFrames, projectile);
+        }
+    }
 };
 
 //Crow Projectile
@@ -49,6 +95,8 @@ function createCrowProjectile() {
         height: 10,
         speedX,
         speedY,
+        angle: Math.atan2(dy, dx),
+        age: 0,
         owner: "crow"
     };
 }
@@ -69,6 +117,8 @@ function createFoxProjectile() {
         height: 10,
         speedX,
         speedY,
+        angle: Math.atan2(dy, dx),
+        age: 0,
         owner: "fox"
     };
 }
@@ -79,6 +129,7 @@ function updateProjectiles() {
         const projectile = projectiles[i];
         projectile.x += projectile.speedX;
         projectile.y += projectile.speedY;
+        projectile.age++;
         // Remove player projectile if it goes off screen
         if (projectile.x > canvas.width && projectile.owner === "player") {
             projectiles.splice(i, 1);
