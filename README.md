@@ -37,14 +37,17 @@ Survive as long as possible against waves of enemies (crow, fox, rat). Shoot the
  
 ```
 64-31_RadioactiveDuckGame/
-├── index.html              # entry point
+├── index.html              # entry point — avatar customization (pseudo + duck color)
+├── game.html               # gameplay page
 ├── js/
+│   ├── setup.js            # avatar customization page logic (index.html)
 │   ├── game.js             # main loop, game state, collisions
 │   ├── player.js           # player state, movement, score
 │   ├── enemy.js            # enemies (crow, fox, rat)
 │   ├── projectile.js       # shooting / projectiles
 │   ├── input-handler.js    # keyboard + mouse input
-│   ├── game-render.js      # backgrounds, menu, rendering
+│   ├── background.js       # parallax scrolling backgrounds
+│   ├── game-render.js      # menu, game over, rendering
 │   ├── game-hud.js         # score, health bar
 │   └── audio.js            # sounds and music
 └── ressources/

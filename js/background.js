@@ -40,6 +40,9 @@ bgGrass.src = 'ressources/images/backgrounds/forest_background/layer4_grass.png'
 const foxTower = new Image();
 foxTower.src = 'ressources/images/backgrounds/tower.png';
 
+// Parallax scrolling: each layer has its own `speed` (px/frame scrolled left).
+// Lower speed = further away (background), higher speed = closer to the camera (foreground).
+// Layers loop seamlessly by resetting layer.x to 0 once it has scrolled past -imgW.
 class Background {
     constructor() {
         //x = horizontal scroll position

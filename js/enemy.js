@@ -34,11 +34,11 @@ const fox = {
     attack: 15,
     defense: 10,
     x: 600,
-    y: GROUND_Y - 207 - 8 - 64, // position on the tower
+    y: GROUND_Y - 207 - 8 - 64, // position on the tower (207 = tower height, 8 = gap above ground, 64 = fox height)
     width: 80,
     height: 64,
     speedX: -1,
-    respawnTimer: 180, // respawn after 3 seconds
+    respawnTimer: 180, // respawn after 3 seconds (timers count frames, ~60 per second)
     shootTimer: 0,
     shootInterval: 180, // shoot every 3 seconds at 60fps
     visible: true
@@ -103,6 +103,8 @@ function respawnCrow() {
     crow.frameTimer = 0;
 }
 
+// fox.shootInterval is never reset between waves, so this floor (60 frames = 1s)
+// caps how aggressive the fox can get as currentWave grows.
 function respawnFox() {
     fox.health = 150;
     fox.x = canvas.width + 20;

@@ -1,6 +1,8 @@
 const projectiles = [];
 const projectileSpeed = 5;
 
+// dx/dy/length below build a unit vector toward the target, scaled to projectileSpeed,
+// so a projectile travels at the same speed regardless of how far away the target is.
 function createProjectile() {
 
     const dx = mouseX - player.x;

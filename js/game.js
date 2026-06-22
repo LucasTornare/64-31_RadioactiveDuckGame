@@ -12,10 +12,10 @@ function render() {
     background.draw(true);
 
     // Draw the player
-    // Taille d'une frame dans le nouveau spritesheet (grille 2 colonnes x 4 lignes)
+    // Taille d'une frame dans le spritesheet (grille 2 colonnes x 3 lignes, 138px par frame)
     const frameW = 138;
     const frameH = 138;
-    // frameX (0 à 3) est traité comme un index linéaire sur cette grille
+    // frameX (0 à 5, voir update()) est traité comme un index linéaire sur cette grille
     const col = player.frameX % 2;
     const row = Math.floor(player.frameX / 2);
 
