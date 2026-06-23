@@ -55,7 +55,10 @@ backButton.src = 'ressources/images/gameMenu/button1.png';
 const HOF_BUTTON_WIDTH = 220;
 const HOF_BUTTON_HEIGHT = 55;
 const HOF_PANEL_WIDTH = 600;
-const HOF_PANEL_HEIGHT = 470;
+const HOF_PANEL_HEIGHT = 380;
+const HOF_BUTTON_GAP = 25; // space between the panel and the BACK button, kept separate so neither touches
+const HOF_PANEL_Y = (canvas.height - (HOF_PANEL_HEIGHT + HOF_BUTTON_GAP + HOF_BUTTON_HEIGHT)) / 2;
+const HOF_BACK_BUTTON_Y = HOF_PANEL_Y + HOF_PANEL_HEIGHT + HOF_BUTTON_GAP;
 
 //Draw the header of the game, the button to start the game and the header "Press Enter to Start"
 function renderMenu() {
@@ -219,7 +222,7 @@ function renderHallOfFame() {
     ctx.strokeRect(0, 0, canvas.width, canvas.height);
 
     const panelX = (canvas.width - HOF_PANEL_WIDTH) / 2;
-    const panelY = (canvas.height - HOF_PANEL_HEIGHT) / 2;
+    const panelY = HOF_PANEL_Y;
     ctx.drawImage(commandsPanel, panelX, panelY, HOF_PANEL_WIDTH, HOF_PANEL_HEIGHT);
 
     ctx.shadowColor = '#000000';
@@ -229,38 +232,38 @@ function renderHallOfFame() {
     ctx.textBaseline = 'middle';
 
     ctx.fillStyle = '#e0ff89';
-    ctx.font = '36px ' + gameFont;
+    ctx.font = '32px ' + gameFont;
     ctx.textAlign = 'center';
-    ctx.fillText('HALL OF FAME', canvas.width / 2, panelY + 50);
+    ctx.fillText('HALL OF FAME', canvas.width / 2, panelY + 48);
 
     const hallOfFame = JSON.parse(localStorage.getItem('hallOfFame') || '[]');
-    ctx.font = '22px ' + gameFont;
+    ctx.font = '20px ' + gameFont;
     ctx.fillStyle = '#cedd59';
 
     if (hallOfFame.length === 0) {
         ctx.fillText('No scores yet, go make history!', canvas.width / 2, panelY + 150);
     } else {
-        const rowStartY = panelY + 100;
-        const rowHeight = 30;
+        const rowStartY = panelY + 95;
+        const rowHeight = 26;
         hallOfFame.forEach((entry, index) => {
             const rowY = rowStartY + index * rowHeight;
             ctx.textAlign = 'left';
-            ctx.fillText(`${index + 1}. ${entry.pseudo}`, panelX + 50, rowY);
+            ctx.fillText(`${index + 1}. ${entry.pseudo}`, panelX + 75, rowY);
             ctx.textAlign = 'right';
-            ctx.fillText(`${entry.score} pts - ${entry.distance}m`, panelX + HOF_PANEL_WIDTH - 50, rowY);
+            ctx.fillText(`${entry.score} pts  ${entry.distance}m`, panelX + HOF_PANEL_WIDTH - 75, rowY);
         });
     }
 
     ctx.drawImage(
         backButton,
         canvas.width / 2 - HOF_BUTTON_WIDTH / 2,
-        panelY + HOF_PANEL_HEIGHT - 70,
+        HOF_BACK_BUTTON_Y,
         HOF_BUTTON_WIDTH, HOF_BUTTON_HEIGHT
     );
     ctx.fillStyle = '#e0ff89';
     ctx.font = '26px ' + gameFont;
     ctx.textAlign = 'center';
-    ctx.fillText('BACK', canvas.width / 2, panelY + HOF_PANEL_HEIGHT - 70 + HOF_BUTTON_HEIGHT / 2);
+    ctx.fillText('BACK', canvas.width / 2, HOF_BACK_BUTTON_Y + HOF_BUTTON_HEIGHT / 2);
 
     ctx.shadowColor = 'transparent';
 }

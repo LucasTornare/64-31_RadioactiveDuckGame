@@ -78,7 +78,8 @@ function updateHallOfFame() {
         score: player.score,
         distance: Math.floor(player.distance / 60)
     });
-    hallOfFame.sort((a, b) => b.score - a.score);
+    // Higher score wins; ties broken by the longer distance travelled
+    hallOfFame.sort((a, b) => b.score - a.score || b.distance - a.distance);
     hallOfFame.length = Math.min(hallOfFame.length, 10);
     localStorage.setItem('hallOfFame', JSON.stringify(hallOfFame));
 }

@@ -37,13 +37,11 @@ canvas.addEventListener('click', (event) => {
     // restart
     if (gameStarted === false && gameOver === true) {
         if (showHallOfFame) {
-            // BACK button on the hall of fame panel
-            const panelY = (canvas.height - HOF_PANEL_HEIGHT) / 2;
-            const backY = panelY + HOF_PANEL_HEIGHT - 70;
+            // BACK button below the hall of fame panel
             if (x > canvas.width / 2 - HOF_BUTTON_WIDTH / 2
                 && x < canvas.width / 2 + HOF_BUTTON_WIDTH / 2
-                && y > backY
-                && y < backY + HOF_BUTTON_HEIGHT) {
+                && y > HOF_BACK_BUTTON_Y
+                && y < HOF_BACK_BUTTON_Y + HOF_BUTTON_HEIGHT) {
                 showHallOfFame = false;
             }
             return;
