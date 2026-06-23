@@ -241,6 +241,7 @@ function update() {
     //check collision between player and crow
     if (player.health <= 0) {
         gameOver = true;
+        scoreSaver(); // persist best/last score right away so the game over screen shows it
         playerDeath.play().catch(() => {}); // play player death sound
         console.log('Game Over!');
     }
