@@ -2,6 +2,7 @@ const ctx = canvas.getContext('2d');
 let gameStarted = false;
 let gamePaused = false;
 let gameOver = false;
+let showHallOfFame = false;
 
 //function to render the game
 function render() {
@@ -242,6 +243,7 @@ function update() {
     if (player.health <= 0) {
         gameOver = true;
         scoreSaver(); // persist best/last score right away so the game over screen shows it
+        updateHallOfFame(); // record this run in the top-10 leaderboard
         playerDeath.play().catch(() => {}); // play player death sound
         console.log('Game Over!');
     }
@@ -308,8 +310,12 @@ function gameLoop() {
             musicGameplay.currentTime = 0;
         }
         gameStarted = false; // Stop the game loop from updating and rendering the game
-        renderGameOver();
-        handleGameOverInput();
+        if (showHallOfFame) {
+            renderHallOfFame();
+        } else {
+            renderGameOver();
+            handleGameOverInput();
+        }
     }
 
     //Crow shoot every 2 seconds

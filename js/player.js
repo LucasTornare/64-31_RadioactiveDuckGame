@@ -62,15 +62,25 @@ function restartPlayer() {
 // Called from restartPlayer(), right before player.score is reset to 0.
 function scoreSaver() {
     let bestScore = localStorage.getItem("bestScore");
-    if (bestScore === null)
-    {
-        localStorage.setItem("bestScore", player.score);
-        return;
-    }
-    bestScore = parseInt(bestScore);
-    if (player.score > bestScore) {
+    if (bestScore === null || player.score > parseInt(bestScore)) {
         localStorage.setItem("bestScore", player.score);
     }
     localStorage.setItem("lastScore", player.score);
+}
+
+// Adds the current run to the top-10 leaderboard stored as JSON in localStorage.
+// Scoped to this browser only (no backend) - called once, at the moment of death.
+function updateHallOfFame() {
+    if (player.score <= 0) return;
+    const hallOfFame = JSON.parse(localStorage.getItem('hallOfFame') || '[]');
+    hallOfFame.push({
+        pseudo: savedPlayer.pseudo,
+        score: player.score,
+        distance: Math.floor(player.distance / 60)
+    });
+    // Higher score wins; ties broken by the longer distance travelled
+    hallOfFame.sort((a, b) => b.score - a.score || b.distance - a.distance);
+    hallOfFame.length = Math.min(hallOfFame.length, 10);
+    localStorage.setItem('hallOfFame', JSON.stringify(hallOfFame));
 }
 
