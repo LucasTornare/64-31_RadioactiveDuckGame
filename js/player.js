@@ -58,6 +58,8 @@ function restartPlayer() {
     player.distance = 0;
 }
 
+// Persists the run's score to localStorage so it survives page reloads/sessions.
+// Called from restartPlayer(), right before player.score is reset to 0.
 function scoreSaver() {
     let bestScore = localStorage.getItem("bestScore");
     if (bestScore === null)

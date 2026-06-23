@@ -1,6 +1,8 @@
 const projectiles = [];
 const projectileSpeed = 5;
 
+// dx/dy/length below build a unit vector toward the target, scaled to projectileSpeed,
+// so a projectile travels at the same speed regardless of how far away the target is.
 // Fireball spritesheet: a "ball -> trailing tail" animation, several colors stacked in a grid.
 // Frame coords were measured directly on the sheet (ball at the left of each frame, tail growing to the right).
 const projectileSpriteSheet = new Image();
