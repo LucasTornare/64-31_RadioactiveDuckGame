@@ -45,6 +45,18 @@ restartButton.src = 'ressources/images/gameMenu/button1.png';
 const mainMenuButton = new Image();
 mainMenuButton.src = 'ressources/images/gameMenu/button1.png';
 
+const hallOfFameButton = new Image();
+hallOfFameButton.src = 'ressources/images/gameMenu/button1.png';
+
+const backButton = new Image();
+backButton.src = 'ressources/images/gameMenu/button1.png';
+
+// Shared layout constants for the Hall of Fame panel (read by input-handler.js too)
+const HOF_BUTTON_WIDTH = 220;
+const HOF_BUTTON_HEIGHT = 55;
+const HOF_PANEL_WIDTH = 600;
+const HOF_PANEL_HEIGHT = 470;
+
 //Draw the header of the game, the button to start the game and the header "Press Enter to Start"
 function renderMenu() {
     ctx.clearRect(0, 0, canvas.width, canvas.height); //Clear the canvas before drawing the menu
@@ -185,5 +197,70 @@ function renderGameOver() {
     ctx.fillText('RESTART', (canvas.width - 420) / 2 + 100, 420 + 28);
     ctx.fillText('MAIN MENU', (canvas.width - 420) / 2 + 220 + 100, 420 + 28);
 
+    //Draw the hall of fame button below the restart/main menu buttons
+    ctx.drawImage(
+        hallOfFameButton,
+        canvas.width / 2 - HOF_BUTTON_WIDTH / 2,
+        500,
+        HOF_BUTTON_WIDTH, HOF_BUTTON_HEIGHT
+    );
+    ctx.font = '22px ' + gameFont;
+    ctx.fillText('HALL OF FAME', canvas.width / 2, 500 + HOF_BUTTON_HEIGHT / 2);
+
     ctx.shadowColor = 'transparent'; // reset pour ne pas affecter les autres draw calls
+}
+
+// Draws the top-10 leaderboard (persisted as JSON in localStorage) with a button to go back
+function renderHallOfFame() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    background.draw();
+    ctx.strokeStyle = 'black';
+    ctx.lineWidth = 5;
+    ctx.strokeRect(0, 0, canvas.width, canvas.height);
+
+    const panelX = (canvas.width - HOF_PANEL_WIDTH) / 2;
+    const panelY = (canvas.height - HOF_PANEL_HEIGHT) / 2;
+    ctx.drawImage(commandsPanel, panelX, panelY, HOF_PANEL_WIDTH, HOF_PANEL_HEIGHT);
+
+    ctx.shadowColor = '#000000';
+    ctx.shadowOffsetX = 4;
+    ctx.shadowOffsetY = 4;
+    ctx.shadowBlur = 1;
+    ctx.textBaseline = 'middle';
+
+    ctx.fillStyle = '#e0ff89';
+    ctx.font = '36px ' + gameFont;
+    ctx.textAlign = 'center';
+    ctx.fillText('HALL OF FAME', canvas.width / 2, panelY + 50);
+
+    const hallOfFame = JSON.parse(localStorage.getItem('hallOfFame') || '[]');
+    ctx.font = '22px ' + gameFont;
+    ctx.fillStyle = '#cedd59';
+
+    if (hallOfFame.length === 0) {
+        ctx.fillText('No scores yet, go make history!', canvas.width / 2, panelY + 150);
+    } else {
+        const rowStartY = panelY + 100;
+        const rowHeight = 30;
+        hallOfFame.forEach((entry, index) => {
+            const rowY = rowStartY + index * rowHeight;
+            ctx.textAlign = 'left';
+            ctx.fillText(`${index + 1}. ${entry.pseudo}`, panelX + 50, rowY);
+            ctx.textAlign = 'right';
+            ctx.fillText(`${entry.score} pts - ${entry.distance}m`, panelX + HOF_PANEL_WIDTH - 50, rowY);
+        });
+    }
+
+    ctx.drawImage(
+        backButton,
+        canvas.width / 2 - HOF_BUTTON_WIDTH / 2,
+        panelY + HOF_PANEL_HEIGHT - 70,
+        HOF_BUTTON_WIDTH, HOF_BUTTON_HEIGHT
+    );
+    ctx.fillStyle = '#e0ff89';
+    ctx.font = '26px ' + gameFont;
+    ctx.textAlign = 'center';
+    ctx.fillText('BACK', canvas.width / 2, panelY + HOF_PANEL_HEIGHT - 70 + HOF_BUTTON_HEIGHT / 2);
+
+    ctx.shadowColor = 'transparent';
 }

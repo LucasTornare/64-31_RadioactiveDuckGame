@@ -36,10 +36,22 @@ canvas.addEventListener('click', (event) => {
     const y = (event.clientY - rect.top) / rect.height * canvas.height;
     // restart
     if (gameStarted === false && gameOver === true) {
+        if (showHallOfFame) {
+            // BACK button on the hall of fame panel
+            const panelY = (canvas.height - HOF_PANEL_HEIGHT) / 2;
+            const backY = panelY + HOF_PANEL_HEIGHT - 70;
+            if (x > canvas.width / 2 - HOF_BUTTON_WIDTH / 2
+                && x < canvas.width / 2 + HOF_BUTTON_WIDTH / 2
+                && y > backY
+                && y < backY + HOF_BUTTON_HEIGHT) {
+                showHallOfFame = false;
+            }
+            return;
+        }
         if (x > (canvas.width - (200 + 20 + 200)) / 2
             && x < ((canvas.width - (200 + 20 + 200)) / 2)+ 200
             && y > 420
-            && y < 420 + 60) 
+            && y < 420 + 60)
         {
             gameOver = false;
             restartPlayer();
@@ -67,6 +79,13 @@ canvas.addEventListener('click', (event) => {
         musicGameMenu.currentTime = 0;
         musicGameMenu.play().catch(() => {});
     }
+        // hall of fame
+        if (x > canvas.width / 2 - HOF_BUTTON_WIDTH / 2
+            && x < canvas.width / 2 + HOF_BUTTON_WIDTH / 2
+            && y > 500
+            && y < 500 + HOF_BUTTON_HEIGHT) {
+            showHallOfFame = true;
+        }
     }
     else if ( gameStarted === false) {
         if (x > canvas.width / 2 - 200 / 2
