@@ -193,7 +193,7 @@ function update() {
     }
     if (keysDown['a']) {
         player.frameTimer++;
-        if (player.frameTimer > 1) { // Adjust the frame change speed here
+        if (player.frameTimer > 12) { // Adjust the frame change speed here
             player.frameX = (player.frameX + 1) % 6;
             player.frameTimer = 0;
         }
@@ -202,7 +202,7 @@ function update() {
     }
     if (keysDown['d']) {
         player.frameTimer++;
-        if (player.frameTimer > 1) { // Adjust the frame change speed here
+        if (player.frameTimer > 12) { // Adjust the frame change speed here
             player.frameX = (player.frameX + 1) % 6;
             player.frameTimer = 0;
         }

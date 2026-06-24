@@ -30,8 +30,8 @@ const player = {
     x: 50,
     y: GROUND_Y - 100 +6, // start on the ground
     attack: 25,
-    width: 100,
-    height: 100,
+    width: 80,
+    height: 70,
     health: 100,
     frameX: 0,
     frameY: 0,
