@@ -211,15 +211,18 @@ function update() {
     }
 
     player.onGround = false;
-    //Handle gravity for player
-    player.velocityY += gravity;
     player.y += player.velocityY;
-    
-    //Bring back player on the ground
-    if(player.y + player.height >= GROUND_Y) {
-        player.y = GROUND_Y - player.height+6;
+
+    // Bring back player on the ground
+    if (player.y + player.height >= GROUND_Y) {
+        player.y = GROUND_Y - player.height + 6;
         player.velocityY = 0;
         player.onGround = true;
+    }
+
+    // Only add gravity if not on the ground
+    if (!player.onGround) {
+        player.velocityY += gravity;
     }
 
     // Keep player within canvas bounds
